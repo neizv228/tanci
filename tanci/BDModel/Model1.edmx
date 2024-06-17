@@ -1,0 +1,301 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="Хранилище chasiModel" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="chasi">
+          <Key>
+            <PropertyRef Name="TovarID" />
+          </Key>
+          <Property Name="TovarID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TovarName" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="TovarDescription" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="TovarMaster" Type="int" Nullable="false" />
+          <Property Name="TovarCost" Type="decimal" Precision="19" Scale="2" Nullable="false" />
+          <Property Name="TovarDiscountAmount" Type="decimal" Precision="19" Scale="2" Nullable="false" />
+          <Property Name="TovarManufacturer" Type="int" Nullable="false" />
+          <Property Name="TovarPhoto" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="Manufacturers">
+          <Key>
+            <PropertyRef Name="ManufacturerID" />
+          </Key>
+          <Property Name="ManufacturerID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ManufacturerName" Type="nvarchar" MaxLength="150" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Master">
+          <Key>
+            <PropertyRef Name="MasterID" />
+          </Key>
+          <Property Name="MasterID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="MasterName" Type="nvarchar" MaxLength="150" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Role">
+          <Key>
+            <PropertyRef Name="RoleID" />
+          </Key>
+          <Property Name="RoleID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="RoleName" Type="nvarchar" MaxLength="100" Nullable="false" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="UserID" />
+          </Key>
+          <Property Name="UserID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserSurname" Type="nvarchar" MaxLength="150" Nullable="false" />
+          <Property Name="UserName" Type="nvarchar" MaxLength="150" Nullable="false" />
+          <Property Name="UserPatronymic" Type="nvarchar" MaxLength="150" Nullable="false" />
+          <Property Name="UserLogin" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="UserPassword" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="UserRole" Type="int" Nullable="false" />
+        </EntityType>
+        <Association Name="FK__chasi__TovarManu__2E1BDC42">
+          <End Role="Manufacturers" Type="Self.Manufacturers" Multiplicity="1" />
+          <End Role="chasi" Type="Self.chasi" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Manufacturers">
+              <PropertyRef Name="ManufacturerID" />
+            </Principal>
+            <Dependent Role="chasi">
+              <PropertyRef Name="TovarManufacturer" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__chasi__TovarMast__2D27B809">
+          <End Role="Master" Type="Self.Master" Multiplicity="1" />
+          <End Role="chasi" Type="Self.chasi" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Master">
+              <PropertyRef Name="MasterID" />
+            </Principal>
+            <Dependent Role="chasi">
+              <PropertyRef Name="TovarMaster" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__User__UserRole__267ABA7A">
+          <End Role="Role" Type="Self.Role" Multiplicity="1" />
+          <End Role="User" Type="Self.User" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Role">
+              <PropertyRef Name="RoleID" />
+            </Principal>
+            <Dependent Role="User">
+              <PropertyRef Name="UserRole" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Хранилище chasiModelContainer">
+          <EntitySet Name="chasi" EntityType="Self.chasi" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Manufacturers" EntityType="Self.Manufacturers" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Master" EntityType="Self.Master" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Role" EntityType="Self.Role" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__chasi__TovarManu__2E1BDC42" Association="Self.FK__chasi__TovarManu__2E1BDC42">
+            <End Role="Manufacturers" EntitySet="Manufacturers" />
+            <End Role="chasi" EntitySet="chasi" />
+          </AssociationSet>
+          <AssociationSet Name="FK__chasi__TovarMast__2D27B809" Association="Self.FK__chasi__TovarMast__2D27B809">
+            <End Role="Master" EntitySet="Master" />
+            <End Role="chasi" EntitySet="chasi" />
+          </AssociationSet>
+          <AssociationSet Name="FK__User__UserRole__267ABA7A" Association="Self.FK__User__UserRole__267ABA7A">
+            <End Role="Role" EntitySet="Role" />
+            <End Role="User" EntitySet="User" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="chasiModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="chasi">
+          <Key>
+            <PropertyRef Name="TovarID" />
+          </Key>
+          <Property Name="TovarID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TovarName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="TovarDescription" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="TovarMaster" Type="Int32" Nullable="false" />
+          <Property Name="TovarCost" Type="Decimal" Precision="19" Scale="2" Nullable="false" />
+          <Property Name="TovarDiscountAmount" Type="Decimal" Precision="19" Scale="2" Nullable="false" />
+          <Property Name="TovarManufacturer" Type="Int32" Nullable="false" />
+          <Property Name="TovarPhoto" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Manufacturers" Relationship="Self.FK__chasi__TovarManu__2E1BDC42" FromRole="chasi" ToRole="Manufacturers" />
+          <NavigationProperty Name="Master" Relationship="Self.FK__chasi__TovarMast__2D27B809" FromRole="chasi" ToRole="Master" />
+        </EntityType>
+        <EntityType Name="Manufacturers">
+          <Key>
+            <PropertyRef Name="ManufacturerID" />
+          </Key>
+          <Property Name="ManufacturerID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ManufacturerName" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="chasi" Relationship="Self.FK__chasi__TovarManu__2E1BDC42" FromRole="Manufacturers" ToRole="chasi" />
+        </EntityType>
+        <EntityType Name="Master">
+          <Key>
+            <PropertyRef Name="MasterID" />
+          </Key>
+          <Property Name="MasterID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="MasterName" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="chasi" Relationship="Self.FK__chasi__TovarMast__2D27B809" FromRole="Master" ToRole="chasi" />
+        </EntityType>
+        <EntityType Name="Role">
+          <Key>
+            <PropertyRef Name="RoleID" />
+          </Key>
+          <Property Name="RoleID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="RoleName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="User" Relationship="Self.FK__User__UserRole__267ABA7A" FromRole="Role" ToRole="User" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="UserID" />
+          </Key>
+          <Property Name="UserID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserSurname" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="UserName" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="UserPatronymic" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="UserLogin" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="UserPassword" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="UserRole" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Role" Relationship="Self.FK__User__UserRole__267ABA7A" FromRole="User" ToRole="Role" />
+        </EntityType>
+        <Association Name="FK__chasi__TovarManu__2E1BDC42">
+          <End Role="Manufacturers" Type="Self.Manufacturers" Multiplicity="1" />
+          <End Role="chasi" Type="Self.chasi" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Manufacturers">
+              <PropertyRef Name="ManufacturerID" />
+            </Principal>
+            <Dependent Role="chasi">
+              <PropertyRef Name="TovarManufacturer" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__chasi__TovarMast__2D27B809">
+          <End Role="Master" Type="Self.Master" Multiplicity="1" />
+          <End Role="chasi" Type="Self.chasi" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Master">
+              <PropertyRef Name="MasterID" />
+            </Principal>
+            <Dependent Role="chasi">
+              <PropertyRef Name="TovarMaster" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__User__UserRole__267ABA7A">
+          <End Role="Role" Type="Self.Role" Multiplicity="1" />
+          <End Role="User" Type="Self.User" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Role">
+              <PropertyRef Name="RoleID" />
+            </Principal>
+            <Dependent Role="User">
+              <PropertyRef Name="UserRole" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="chasiEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="chasi" EntityType="Self.chasi" />
+          <EntitySet Name="Manufacturers" EntityType="Self.Manufacturers" />
+          <EntitySet Name="Master" EntityType="Self.Master" />
+          <EntitySet Name="Role" EntityType="Self.Role" />
+          <EntitySet Name="User" EntityType="Self.User" />
+          <AssociationSet Name="FK__chasi__TovarManu__2E1BDC42" Association="Self.FK__chasi__TovarManu__2E1BDC42">
+            <End Role="Manufacturers" EntitySet="Manufacturers" />
+            <End Role="chasi" EntitySet="chasi" />
+          </AssociationSet>
+          <AssociationSet Name="FK__chasi__TovarMast__2D27B809" Association="Self.FK__chasi__TovarMast__2D27B809">
+            <End Role="Master" EntitySet="Master" />
+            <End Role="chasi" EntitySet="chasi" />
+          </AssociationSet>
+          <AssociationSet Name="FK__User__UserRole__267ABA7A" Association="Self.FK__User__UserRole__267ABA7A">
+            <End Role="Role" EntitySet="Role" />
+            <End Role="User" EntitySet="User" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="Хранилище chasiModelContainer" CdmEntityContainer="chasiEntities">
+          <EntitySetMapping Name="chasi">
+            <EntityTypeMapping TypeName="chasiModel.chasi">
+              <MappingFragment StoreEntitySet="chasi">
+                <ScalarProperty Name="TovarID" ColumnName="TovarID" />
+                <ScalarProperty Name="TovarName" ColumnName="TovarName" />
+                <ScalarProperty Name="TovarDescription" ColumnName="TovarDescription" />
+                <ScalarProperty Name="TovarMaster" ColumnName="TovarMaster" />
+                <ScalarProperty Name="TovarCost" ColumnName="TovarCost" />
+                <ScalarProperty Name="TovarDiscountAmount" ColumnName="TovarDiscountAmount" />
+                <ScalarProperty Name="TovarManufacturer" ColumnName="TovarManufacturer" />
+                <ScalarProperty Name="TovarPhoto" ColumnName="TovarPhoto" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Manufacturers">
+            <EntityTypeMapping TypeName="chasiModel.Manufacturers">
+              <MappingFragment StoreEntitySet="Manufacturers">
+                <ScalarProperty Name="ManufacturerID" ColumnName="ManufacturerID" />
+                <ScalarProperty Name="ManufacturerName" ColumnName="ManufacturerName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Master">
+            <EntityTypeMapping TypeName="chasiModel.Master">
+              <MappingFragment StoreEntitySet="Master">
+                <ScalarProperty Name="MasterID" ColumnName="MasterID" />
+                <ScalarProperty Name="MasterName" ColumnName="MasterName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Role">
+            <EntityTypeMapping TypeName="chasiModel.Role">
+              <MappingFragment StoreEntitySet="Role">
+                <ScalarProperty Name="RoleID" ColumnName="RoleID" />
+                <ScalarProperty Name="RoleName" ColumnName="RoleName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="User">
+            <EntityTypeMapping TypeName="chasiModel.User">
+              <MappingFragment StoreEntitySet="User">
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="UserSurname" ColumnName="UserSurname" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="UserPatronymic" ColumnName="UserPatronymic" />
+                <ScalarProperty Name="UserLogin" ColumnName="UserLogin" />
+                <ScalarProperty Name="UserPassword" ColumnName="UserPassword" />
+                <ScalarProperty Name="UserRole" ColumnName="UserRole" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Нет" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
